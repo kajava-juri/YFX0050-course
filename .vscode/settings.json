@@ -1,0 +1,9 @@
+{
+    "files.autoSave": "afterDelay",
+    "files.associations": {
+        "*.f": "FortranFreeForm"
+    },
+    "fortran.fortls.path": "${workspaceFolder}/.venv/bin/fortls",
+    "fortran.linter.compiler": "gfortran",
+    "fortran.linter.compilerPath": "gfortran"
+}

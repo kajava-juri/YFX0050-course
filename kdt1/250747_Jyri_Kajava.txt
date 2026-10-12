@@ -1,0 +1,116 @@
+Kodutöö
+       
+2. Kas järgmistes Fortrani operaatoritel on vigu? Selgitage oma vastuseid.
+
+a) real a(10), 1b, *abc#(2), param(10)
+1. muutuja nimi ei saa alustada numbriga
+2. muutuja samuti ei saa alustada '*', ainult tähega
+
+b) real a(10), a(12), b_c_d
+1. muutujat sama nimega ei saa defineerida
+
+c) complex*4 ::a,b
+1. kompleks muutuja süntaks on 'complex(specs)' (vana stiiliga deklaratsioon?)
+
+d) integer a(0), b(5)
+vigu ei ole
+
+e) real*16 a(-5)
+vigu ei ole
+
+f) character*10 a(5)
+vigu ei ole
+
+g) complex*64 a,b
+1. kompleks muutuja süntaks on 'complex(specs)' (vana stiiliga deklaratsioon?)
+
+h) real*8,allocatable:: a(10)
+1. 'allocatable' tüüpi ei saa compileerimise ajal suurust määrata
+
+I) real :: a,b,c
+vigu ei ole
+
+j) real abc,Abc,ABC
+1. muutujad on 'case-insensitive' ning ei saa sama nimega muutujat deklareerida mitu korda
+
+
+15. JÃ¤rgmises FORTRAN programmis peate leidma vead,
+selgitage oma vastuseid.
+
+Faktoriali arvutamine:
+
+ integer n,i,ifact
+ read *,n
+ if(n.lt.0)then
+ print *,"n on neg."
+ stop
+ endif
+ if(n.eq.0.and.n.eq.1)then
+ ifakt=1
+ print 100,â€fakt=â€, ifakt
+ stop
+ endif
+ do i=0,n
+ ifact=ifact*i
+ enddo
+ print *,ifact
+ stop
+
+1. deklareeritakse 'ifact', aga kasutatakse 'ifakt'
+2. tingimus 'n.eq.0.and.n.eq.1' ei saa kunagi tõeks kuna 'n' ei saa olla kunagi 1 ja 0 korrage
+    peaks olem 'and' asemel 'or'
+3. ifakt peaks olema deklareeritud väljaspool 'if' skoopi, selleks et do-while tsüklis loeks seda väärtust
+4. do-while tsükkel peaks algama 'i=1', muidu kõik tulemused korrutatakse nulliga
+ 
+6. Mida kuvatakse, kui käivitate alloleva FORTRAN koodi? 
+Kirjutage kommentaare igale operaatorile?
+
+integer k ! loendur
+k=0 ! algväärtus
+do while (k<5) ! tsükkel, mis käib 5 korda
+k=k+1 ! suurenda loendur ühe võrra
+print *,k ! kuva loenduri väärtus
+enddo ! tsükli lõpp
+stop ! programmist väljumine
+end ! programmi lõpumärk
+
+Väljund:
+
+1
+2
+3
+4
+5
+
+
+6. Arvutage numbriliselt järgmise integraali väärtuse 
+Monte-Carlo meetodil (FORTRAN keskonnas) :.
+
+Funktsioon y=cos(x)^2, x=[0,pi]
+
+Vastus:
+
+implicit none
+
+real(8), parameter :: pi = acos(-1.0_8)
+integer :: n = 1000000, i
+real(8) :: total, average, result
+total = 0.0
+
+do i = 1, n
+    total = total + f(rand(0)*pi)
+end do
+
+average = total / n
+result = average * pi
+
+print *, "Estimated integral:", result
+
+contains
+    real(8) function f(x)
+        real(8), intent(in) :: x
+        f = cos(x)*cos(x)
+    end function f
+
+end
+    
